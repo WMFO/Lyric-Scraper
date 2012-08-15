@@ -17,14 +17,10 @@ size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp);
 string build_url (string band, string song);
 string scrape (string url);
 
-int main () {
-    string band;
-    string song;
-    cout << "Band: "<<endl;
-    getline (cin, band);
-    cout << "Song:" <<endl;
-    getline (cin, song);
-
+int main (int argc, char *argv[]) {
+    string band = argv[1];
+    string song = argv[2];
+    
     string url = build_url(band, song);
     if (DEBUG) cout << url <<endl;
 
@@ -77,5 +73,5 @@ string scrape (string url) {
     curl_easy_cleanup(handle);
 
     if (!error) return buffer.str();
-    else return "Error!";
+    else return "";
 }
