@@ -24,10 +24,9 @@ int main () {
     getline (cin, band);
     cout << "Song:" <<endl;
     getline (cin, song);
-    if (DEBUG) cout << band << " " << song <<endl;
 
     string url = build_url(band, song);
-    if (DEBUG) cout << url<<endl;
+    if (DEBUG) cout << url <<endl;
 
     string lyrics = scrape(url);
     if (DEBUG) cout << lyrics <<endl;
