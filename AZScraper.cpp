@@ -72,8 +72,11 @@ string scrape (string url) {
     curl_easy_setopt(handle, CURLOPT_WRITEDATA, &buffer);
     curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, write_data);
     curl_easy_setopt(handle, CURLOPT_FOLLOWLOCATION, 1);
+    curl_easy_setopt(handle, CURLOPT_FAILONERROR, true);
+    
     error = curl_easy_perform(handle);
     curl_easy_cleanup(handle);
 
-    return buffer.str();
+    if (!error) return buffer.str();
+    else return "Error!";
 }
