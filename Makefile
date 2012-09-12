@@ -7,14 +7,15 @@
 INSTALLDIR=/opt/wmfo/lyric-scraper
 OWNER = root
 MOD = 755
-FILE = AZScraper
+FILE = Scraper
+OTHERFILES = Lyrics.cpp
 
 .PHONY: all clean install uninstall
 
 all: $(FILE).out
 
-$(FILE).out: $(FILE).cpp
-	@g++ -o $@ $< -Wall -Wextra -Werror -lcurl
+$(FILE).out: $(FILE).cpp $(OTHERFILES) 
+	@g++ -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
 
 clean:
 	@$(RM) *.o $(FILE).out
