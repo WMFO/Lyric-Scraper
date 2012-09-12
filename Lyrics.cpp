@@ -40,6 +40,7 @@ size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp) {
 }
 
 string curl_lyrics(string url){
+    if (DEBUG) cout << url << endl;
     CURL *handle;
     CURLcode error;
     ostringstream buffer;

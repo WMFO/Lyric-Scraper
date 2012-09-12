@@ -10,7 +10,7 @@ d[^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?[ck]
 d+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*k+[^ a-zA-Z\s',;()]*[ck]*
 d+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*c+[^ a-zA-Z\s',;()]*[ck]+
 [ck][^ a-zA-Z\s',;()]?[ck][ck]
-[ck][^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?[ck]
+[ck][^ a-zA-Z\s',;()]{2,}[ck]
 [ck]+[^ a-zA-Z\s',;()]*o+[^ a-zA-Z\s',;()]*[ck]+[^ a-zA-Z\s',;()]*[ck]+
 p[^ a-zA-Z\s',;()]?nis
 p[^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?[^ a-zA-Z\s',;()]?s
@@ -46,7 +46,7 @@ p+[^ a-zA-Z\s',;()]*u+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z\s',;()]*
 [kc][^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?t
 [kc]+[^ a-zA-Z\s',;()]*u+[^ a-zA-Z\s',;()]*n+[^ a-zA-Z\s',;()]*t+
 tw[^ a-zA-Z\s',;()]?t
-t[^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?t
+t[^ a-zA-Z\s',;()]{2,}t
 t+[^ a-zA-Z\s',;()]*w+[^ a-zA-Z\s',;()]*a+[^ a-zA-Z\s',;()]*t+
 [ck]l[^ a-zA-Z\s',;()]?t
 [ck][^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?t

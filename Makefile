@@ -9,12 +9,13 @@ OWNER = root
 MOD = 755
 FILE = Scraper
 OTHERFILES = Lyrics.cpp
+OTHERPREREQS = Lyrics.h filter.txt
 
 .PHONY: all clean install uninstall
 
 all: $(FILE).out
 
-$(FILE).out: $(FILE).cpp $(OTHERFILES) 
+$(FILE).out: $(FILE).cpp $(OTHERFILES) $(OTHERPREREQS)
 	@g++ -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
 
 clean:
