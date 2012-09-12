@@ -12,6 +12,8 @@
 #include <assert.h>
 #include "Lyrics.h"
 
+#define OUTPUT 1
+
 using namespace std;
 
 string scrub_str (string str);
@@ -30,8 +32,7 @@ int main (int argc, char *argv[]) {
         band.erase(0, 3);
     }
 
-    if (DEBUG) cout << lyrics(song, band) << endl;
-    //TODO: Store lyrics in array, run statistics on them, match against regex
+    if (OUTPUT) cout << lyrics(song, band) << endl;
 
     return 0;
 }

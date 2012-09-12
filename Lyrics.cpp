@@ -25,8 +25,10 @@ string lyrics (string song, string band) {
 string AZlyrics(string song, string band){
     string url = "http://www.azlyrics.com/lyrics/" + band + "/" + song + ".html";
     string lyrics = curl_lyrics(url);
-    //TODO: Clean up curled page source and return only the lyrics
-    return lyrics;
+    int start = lyrics.find("<!-- start of lyrics -->") + 25;
+    int end   = lyrics.find("<!-- end of lyrics -->");
+    transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
+    return lyrics.substr(start, end-start);
 }
 
 
