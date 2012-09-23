@@ -51,9 +51,9 @@ t+[^ a-zA-Z\s',;()]*w+[^ a-zA-Z\s',;()]*a+[^ a-zA-Z\s',;()]*t+
 [ck]l[^ a-zA-Z\s',;()]?t
 [ck][^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?t
 [ck]+[^ a-zA-Z\s',;()]*l+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+
-[^ a-zA-Z\s',;()]ss[^ a-zA-Z]?hole
-a[^ a-zA-Z\s',;()]+s[^ a-zA-Z]?hole
-a+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z]?hole
+[^ a-zA-Z\s',;()]ss[^ a-zA-Z\s',;()]?hole
+a[^ a-zA-Z\s',;()]+s[^ a-zA-Z\s',;()]?hole
+a+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z\s',;()]*s+[^ a-zA-Z\s',;()]?hole
 [ck][^ a-zA-Z\s',;()]m
 [ck][^ a-zA-Z\s',;()]+m
 [ck]+[^ a-zA-Z\s',;()]*u+[^ a-zA-Z\s',;()]*m+

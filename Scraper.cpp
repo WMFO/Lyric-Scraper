@@ -2,11 +2,12 @@
 // Lyric Scraper v1
 // grabs HTML of associated AZLyrics page for parsing using cURL
 // g++ -Wall AZScraper.cpp -lcurl
-//
+
 
 #include <curl/curl.h>
 #include <cctype>
 #include <iostream>
+#include <algorithm>
 #include <sstream>
 #include <string>
 #include <assert.h>
