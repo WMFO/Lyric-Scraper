@@ -12,6 +12,6 @@
 
 using namespace std;
 
-string lyrics (string song, string band);
+string lyrics (string song, string band, int site);
 
 #endif
