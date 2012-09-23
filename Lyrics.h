@@ -3,6 +3,7 @@
 
 #include <curl/curl.h>
 #include <cctype>
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -11,6 +12,6 @@
 
 using namespace std;
 
-string lyrics (string song, string band);
+string lyrics (string song, string band, int site);
 
 #endif

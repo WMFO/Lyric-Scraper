@@ -10,13 +10,15 @@ size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp);
 string curl_lyrics(string url);
 
 string AZlyrics(string song, string band);
+string LyricsCom(string song, string band);
 // More to come
 
-string lyrics (string song, string band) {
-    int one = 1;
-    switch(one){
+string lyrics (string song, string band, int site) {
+    switch(site){
         case 1:
             return AZlyrics(song, band);
+        case 2:
+            return LyricsCom(song, band);
         default:
             return "";
     }
@@ -27,6 +29,16 @@ string AZlyrics(string song, string band){
     string lyrics = curl_lyrics(url);
     int start = lyrics.find("<!-- start of lyrics -->") + 25;
     int end   = lyrics.find("<!-- end of lyrics -->");
+    transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
+    return lyrics.substr(start, end-start);
+}
+
+string LyricsCom(string song, string band){
+    string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
+    cout << url << endl;
+    string lyrics = curl_lyrics(url);
+    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 22;
+    int end   = lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
 }
