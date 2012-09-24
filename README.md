@@ -30,3 +30,6 @@ Portability bug fixes, add another site. - Connor Blanck
 
 ###09/23/12
 Move string parsing functions around. Call lyrics function in loop. - Max Goldstein
+
+###09/23/12  
+Added more buffering to LyricsCom so it doesn't grab as much HTML. Fixed scrape.sh so it allows for songs with spaces
