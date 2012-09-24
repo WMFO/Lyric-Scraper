@@ -53,9 +53,8 @@ string LyricsCom(string song, string band){
     band = dash_str(band);
     removeThe(song);
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
-    cout << url << endl;
     string lyrics = curl_lyrics(url);
-    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 22;
+    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 27;
     int end   = lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
