@@ -14,51 +14,27 @@
 #include "Lyrics.h"
 
 #define OUTPUT 1
+#define MIN_LYR_LEN 64
 
 using namespace std;
 
-string scrub_str (string str);
-string dash_str (string str);
-string scrape (string url);
-
 int main (int argc, char *argv[]) {
     assert(argc > 2);
-    //string song = scrub_str(argv[1]);
-    //string band = scrub_str(argv[2]);
     string song = argv[1];
     string band = argv[2];
 
-    if (OUTPUT) cout << "Song: " << song << endl;
-    if (OUTPUT) cout << "Band: " << band << endl;
+    if (DEBUG) cout << "Song: " << song << endl;
+    if (DEBUG) cout << "Band: " << band << endl;
 
-    //Some sites might want the "the"; consider moving the site-specific functions
-    if (band.compare(0, 3, "the") == 0) {
-        band.erase(0, 3);
+    int nsites = numSites();
+    for (int i = 0; i < nsites; i++){
+        string result = lyrics(song, band, i);
+        if (result.length() > MIN_LYR_LEN){
+            if (OUTPUT) cout << result << endl;
+            break;
+        }
     }
-
-    if (OUTPUT) cout << lyrics(scrub_str(song), scrub_str(band), 1) << endl;
-    if (OUTPUT) cout << lyrics(dash_str(song), dash_str(band), 2) << endl;
 
     return 0;
-}
-
-string scrub_str (string str){
-    for (uint i=0; i<str.length(); i++) {
-        if (!isalnum(str[i])) { 
-            str.erase(i, 1);
-        }
-    }
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
-    return str;
-}
-
-string dash_str (string str){
-    for (uint i=0; i<str.length(); i++) {
-        if(isspace(str.at(i))) {
-            str[i] = '-';
-        }
-    }
-    transform(str.begin(), str.end(), str.begin(), ::tolower);
-    return str;
 }
 
