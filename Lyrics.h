@@ -13,5 +13,6 @@
 using namespace std;
 
 string lyrics (string song, string band, int site);
+int numSites();
 
 #endif
