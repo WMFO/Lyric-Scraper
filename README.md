@@ -3,9 +3,10 @@ Lyric-Scraper
 
 WMFO - Tufts Freeform Radio  
 ops@wmfo.org  
-For copyrights and licensing, see (to come).  
+For copyrights and licensing, see COPYING.  
 
-Determines the profanity, if any, in a song by curling lyrics from multiple websites.
+Determines the profanity, if any, in a song by curling lyrics from multiple
+websites.
 
 This code is UNFINISHED and UNDER ACTIVE DEVELOPMENT.  
 
