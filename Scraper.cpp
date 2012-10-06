@@ -15,9 +15,10 @@
 #include <vector>
 #include "Lyrics.h"
 #include "Log.h"
+#include "Regex.h"
 
-#define OUTPUT 1
 #define MIN_LYR_LEN 64
+#define REGEXFILE "filter.txt"
 
 // Exit codes
 #define GOOD 0
@@ -98,14 +99,15 @@ int main (int argc, char *argv[]) {
 }
 
 void log_normal(string err) { 
-    if (OUTPUT)
-        cout << err << endl;
+    cout << err << endl;
 }
 void log_error (string err) { 
     logfile << timestamp() << ": " << err << endl;
+    cerr << err << endl;
 }
 void log_fatal (string err) { 
     logfile << timestamp() << ": " << err << endl;
+    cerr << err << endl;
 }
 
 string timestamp(){
