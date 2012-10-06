@@ -31,7 +31,7 @@ b[^ a-zA-Z\s',;()]?tch
 b[^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?[^ a-zA-Z\s',;()]?h
 b+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*c+[^ a-zA-Z\s',;()]*h+
 t[^ a-zA-Z\s',;()]?ts
-t[^ a-zA-Z\s',;()]+s
+t[!@#$%^&*~\?\.:\[\]-=|\\"]+s
 t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*s+
 t[^ a-zA-Z\s',;()]?tties
 t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*e+[^ a-zA-Z\s',;()]*s+
