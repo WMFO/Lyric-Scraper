@@ -27,7 +27,7 @@ public:
     // Return 1 upon success, else 0
     int log(string err, int level);
 private:
-    logger normal, error, fatal;
+    logger normal, error, dirty;
 };
 
 #endif
