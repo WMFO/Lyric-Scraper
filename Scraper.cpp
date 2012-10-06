@@ -55,7 +55,7 @@ int main (int argc, char *argv[]) {
         }
     }
 
-    delete logger;
+    logger;
     return 0;
 }
 
