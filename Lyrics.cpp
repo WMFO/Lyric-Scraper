@@ -5,6 +5,7 @@
 //
 
 #include "Lyrics.h"
+using namespace std;
 
 //Precondition: str is lowercase.
 void removeThe(string str);
@@ -19,22 +20,55 @@ string AZlyrics(string song, string band);
 string LyricsCom(string song, string band);
 // More to come
 
-int numSites(){
-    return 3; //MUST match the case statement in the next function
+/*
+    CLASS LYRICS
+*/
+Lyrics::Lyrics() {
+    sites = vector<site>(2);
+    sites[0].name = "AZlyrics";
+    sites[0].f    = AZlyrics;
+    
+    sites[1].name = "LyricsCom";
+    sites[1].f    = LyricsCom;
+}
+vector<string> Lyrics::lyrics(string song, string band) {
+    vector<string> lyrics = vector<string>(sites.size());
+    for (int i = 0; i < sites.size(); i++) {
+        lyrics[i] = sites[i].f(song, band);
+    }
+    return lyrics;
+}
+string Lyrics::lyrics(string song, string band, int site) {
+    if (site < 0 || site >= sites.size())
+        return "";
+    return sites[site].f(song, band);
+}
+int Lyrics::numSites() {
+    return (int)sites.size();
 }
 
-string lyrics (string song, string band, int site) {
-    switch(site){
-        case 0:
-            return ""; //reserved
-        case 1:
-            return AZlyrics(song, band);
-        case 2:
-            return LyricsCom(song, band);
-        default:
-            return "";
-    }
-}
+
+/*
+    END CLASS LYRICS
+*/
+
+
+//int numSites(){
+//    return 3; //MUST match the case statement in the next function
+//}
+//
+//string lyrics (string song, string band, int site) {
+//    switch(site){
+//        case 0:
+//            return ""; //reserved
+//        case 1:
+//            return AZlyrics(song, band);
+//        case 2:
+//            return LyricsCom(song, band);
+//        default:
+//            return "";
+//    }
+//}
 
 string AZlyrics(string song, string band){
     song = scrub_str(song);
