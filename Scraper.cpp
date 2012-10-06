@@ -18,6 +18,9 @@
 #define OUTPUT 1
 #define MIN_LYR_LEN 64
 
+// Error codes
+#define USAGE 1
+
 using namespace std;
 
 Log logger;
@@ -39,12 +42,19 @@ int main (int argc, char *argv[]) {
         logger.setFunc(NULL, LOG_FATAL);
     }
     
-    assert(argc > 2);
+    if (argc != 2) {
+        string argv0 = argv[0];
+        logger.log("Usage: " + argv0 + " <song> <bands>", LOG_FATAL);
+        exit(USAGE);
+    }
+
     string song = argv[1];
     string band = argv[2];
 
-    if (DEBUG) cout << "Song: " << song << endl;
-    if (DEBUG) cout << "Band: " << band << endl;
+    if (DEBUG) {
+        logger.log("Song: " + song, LOG_NORMAL);
+        logger.log("Band: " + band, LOG_NORMAL);
+    }
 
     int nsites = numSites();
     for (int i = 0; i < nsites; i++){
