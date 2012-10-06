@@ -55,7 +55,7 @@ string AZlyrics(string song, string band){
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
     
-    int start = lyrics.find("<!-- start of lyrics -->") + 25;
+    int start = (int)lyrics.find("<!-- start of lyrics -->") + 25;
 
     // find returns npos on no find. Check against '<' in case start == npos by accident
     // this if statement solely checks if the start position was found, 
@@ -67,7 +67,7 @@ string AZlyrics(string song, string band){
         return lyrics;
     }
     
-    int end   = lyrics.find("<!-- end of lyrics -->");
+    int end   = (int)lyrics.find("<!-- end of lyrics -->");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
 }
@@ -83,7 +83,7 @@ string LyricsCom(string song, string band){
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
     
-    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 30;
+    int start = (int)lyrics.find("<!-- CURRENT LYRIC -->") + 30;
     
     // this if statement solely checks if the start position was found, 
     // if not, then lyrics weren't found on this website
@@ -95,7 +95,7 @@ string LyricsCom(string song, string band){
         return lyrics;
     }
     
-    int end   = lyrics.find("---");
+    int end   = (int)lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
 }
