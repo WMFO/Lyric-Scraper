@@ -10,16 +10,18 @@
 #include <vector>
 
 #define DEBUG 0
+#define ERROR_CHAR 255
 
 using namespace std;
-
-//string lyrics (string song, string band, int site);
-//int numSites();
 
 class Lyrics {
 public:
     Lyrics();
+    
+    // Returns a length-1 string whose character code is ERROR_CHAR upon curl error
     vector<string> lyrics(string song, string band);
+    
+    // Returns a length-1 string whose character code is ERROR_CHAR upon curl error
     string lyrics(string song, string band, int site);
     int numSites();
 private:
