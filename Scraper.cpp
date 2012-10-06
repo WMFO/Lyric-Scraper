@@ -70,24 +70,29 @@ int main (int argc, char *argv[]) {
         string lyric = l.lyrics(song, band, i);
         if (lyric.length() > MIN_LYR_LEN) {
             logger.log(lyric, LOG_NORMAL);
+            break;
         } else if (lyric.length() == 1) {
             if (lyric[0]) {
                 errors++;
-                logger.log("Could not connect to " + l.getName(i), LOG_ERROR);
+                logger.log("Could not connect to " + l.getName(i) + ".", LOG_ERROR);
             }
             else if (lyric[0] == NOT_FOUND) {
-                logger.log("Could not find " + song + " by " + band + " at " + l.getName(i), LOG_ERROR);
+                // logger.log("Could not find " + song + " by " + band + " at " + l.getName(i), LOG_NORMAL);
                 not_found++;
             }
         }
     }
     
     // If all curls failed, there was a connection error
-    if (errors == l.numSites())
+    if (errors == l.numSites()) {
+        logger.log("Could not make any connections.", LOG_ERROR);
         return CONNECTION;
+    }
     // If all searches faild, report the song as not found
-    if (not_found == l.numSites())
+    if (not_found == l.numSites()) {
+        logger.log("Could not find " + song + " by " + band + " on any sites.", LOG_ERROR);
         return NOT_FOUND_EXIT;
+    }
     
     return GOOD;
 }
