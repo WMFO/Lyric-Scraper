@@ -19,7 +19,8 @@
 #define OUTPUT 1
 #define MIN_LYR_LEN 64
 
-// Error codes
+// Exit codes
+#define GOOD 0
 #define USAGE 1
 #define NOTFOUND 2
 #define CONNECTION 3
@@ -76,20 +77,13 @@ int main (int argc, char *argv[]) {
     if (errors == (int)lyrics.size())
         return CONNECTION;
     
-    return 0;
-}
-
-string timestamp(){
-    time_t rawtime;
-    time (&rawtime);
-    return ctime(&rawtime);
+    return GOOD;
 }
 
 void log_normal(string err) { 
     if (OUTPUT)
         cout << err << endl;
 }
-
 void log_error (string err) { 
     logfile << timestamp() << ": " << err << endl;
 }
@@ -97,3 +91,8 @@ void log_fatal (string err) {
     logfile << timestamp() << ": " << err << endl;
 }
 
+string timestamp(){
+    time_t rawtime;
+    time (&rawtime);
+    return ctime(&rawtime);
+}
