@@ -80,10 +80,10 @@ string LyricsCom(string song, string band){
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
     
-    int start = lyrics.find("<div id=\"lyrics\" class=\"SCREENONLY\">") + 36;
+    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 30;
     
     // find returns npos on no find. Check against '<' in case start == npos by accident
-    if (start - 36 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+    if (start - 30 == lyrics.npos && lyrics[lyrics.npos] != '<') {
         lyrics = "a";
         lyrics[0] = NOT_FOUND_CHAR;
         return lyrics;
