@@ -34,7 +34,6 @@ t[^ a-zA-Z\s',;()]?ts
 t[^ a-zA-Z\s',;()]+s
 t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*s+
 t[^ a-zA-Z\s',;()]?tties
-t[^ a-zA-Z\s',;()]+s
 t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*t+[^ a-zA-Z\s',;()]*i+[^ a-zA-Z\s',;()]*e+[^ a-zA-Z\s',;()]*s+
 [\s]v[^ a-zA-Z\s',;()]g(ina|\s)
 [\s]v[^ a-zA-Z\s',;()]+[^ a-zA-Z\s',;()]?([^ a-zA-Z\s',;()]?[^ a-zA-Z\s',;()]?a|\s)
