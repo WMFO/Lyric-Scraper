@@ -58,7 +58,9 @@ string AZlyrics(string song, string band){
     int start = lyrics.find("<!-- start of lyrics -->") + 25;
 
     // find returns npos on no find. Check against '<' in case start == npos by accident
-    if (start - 25 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+    // this if statement solely checks if the start position was found, 
+    // if not, then lyrics weren't found on this website and we return NOT_FOUND_CHAR
+    if (start - 25 == (int)lyrics.npos && lyrics[lyrics.npos] != '<') {
         // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
         lyrics = "a";
         lyrics[0] = NOT_FOUND_CHAR;
@@ -83,8 +85,10 @@ string LyricsCom(string song, string band){
     
     int start = lyrics.find("<!-- CURRENT LYRIC -->") + 30;
     
+    // this if statement solely checks if the start position was found, 
+    // if not, then lyrics weren't found on this website
     // find returns npos on no find. Check against '<' in case start == npos by accident
-    if (start - 30 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+    if (start - 30 == (int) lyrics.npos && lyrics[lyrics.npos] != '<') {
         // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
         lyrics = "a";
         lyrics[0] = NOT_FOUND_CHAR;
