@@ -61,7 +61,7 @@ int main (int argc, char *argv[]) {
     
     Lyrics l = Lyrics();
     vector<string> lyrics = l.lyrics(song, band);
-    for (int i = 0; i < lyrics.size(); i++) {
+    for (int i = 0; i < (int)lyrics.size(); i++) {
         if (lyrics[i].length() > MIN_LYR_LEN) {
             logger.log(lyrics[i], LOG_NORMAL);
         }
