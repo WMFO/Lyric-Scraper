@@ -3,7 +3,7 @@
 // Log levels
 #define LOG_NORMAL 0
 #define LOG_ERROR 1
-#define LOG_FATAL 2
+#define LOG_DIRTY 2
 
 using namespace std;
 

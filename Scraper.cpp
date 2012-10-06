@@ -25,6 +25,8 @@
 #define USAGE 1
 #define CONNECTION 2
 #define NOT_FOUND 3
+#define BOTH 4
+#define DIRTY 5
 
 
 using namespace std;
@@ -35,6 +37,8 @@ void log_normal(string);
 void log_error (string);
 void log_fatal (string);
 string timestamp();
+
+void postRegex(string, string, string, string);
 
 int main (int argc, char *argv[]) {
     
@@ -70,7 +74,8 @@ int main (int argc, char *argv[]) {
     for (int i = 0; i < l.numSites(); i++) {
         string lyric = l.lyrics(song, band, i);
         if (lyric.length() > MIN_LYR_LEN) {
-            logger.log(lyric, LOG_NORMAL);
+            lyric = regex(lyric);
+            postRegex(lyric, song, band, l.getName(i));
             break;
         } else if (lyric.length() == 1) {
             if (lyric[0] == ERROR_CHAR) {
@@ -95,7 +100,15 @@ int main (int argc, char *argv[]) {
         return NOT_FOUND;
     }
     
-    return GOOD;
+    logger.log("Some searches failed and some connections failed; none succeeded.", LOG_ERROR);
+    return BOTH;
+}
+
+void postRegex(string lyric, string song, string band, string site) {
+    if (lyric.length() < 1)
+        exit(GOOD);
+    logger.log("Found bad language in " + song + " by " + band + " at " + site + ": " + lyric, LOG_ERROR);
+    exit(DIRTY);
 }
 
 void log_normal(string err) { 

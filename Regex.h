@@ -1,2 +1,2 @@
 using namespace std;
-string egrep(string input);
+string regex(string input);

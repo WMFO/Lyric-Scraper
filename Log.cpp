@@ -22,7 +22,7 @@ int Log::setFunc(logger l, int level) {
         case LOG_ERROR:
             error = l;
             return 1;
-        case LOG_FATAL:
+        case LOG_DIRTY:
             fatal = l;
             return 1;
     }
@@ -39,7 +39,7 @@ int Log::log(string msg, int level) {
             if (error)
                 error(msg);
             return 1;
-        case LOG_FATAL:
+        case LOG_DIRTY:
             if (fatal)
                 fatal(msg);
             return 1;

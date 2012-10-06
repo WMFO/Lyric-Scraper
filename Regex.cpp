@@ -10,7 +10,7 @@
 #include "Regex.h"
 using namespace std;
 
-string egrep(string input) {
+string regex(string input) {
     // system("egrep -o -f" + REGEXFILE);
     return "test...";
 }
