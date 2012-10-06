@@ -22,9 +22,8 @@
 // Exit codes
 #define GOOD 0
 #define USAGE 1
-#define NOTFOUND 2
-#define CONNECTION 3
-#define NOT_FOUND_EXIT 4
+#define CONNECTION 2
+#define NOT_FOUND_EXIT 3
 
 
 using namespace std;
@@ -72,8 +71,10 @@ int main (int argc, char *argv[]) {
         if (lyric.length() > MIN_LYR_LEN) {
             logger.log(lyric, LOG_NORMAL);
         } else if (lyric.length() == 1) {
-            if (lyric[0])
+            if (lyric[0]) {
                 errors++;
+                logger.log("Could not connect to " + l.getName(i), LOG_ERROR);
+            }
             else if (lyric[0] == NOT_FOUND) {
                 logger.log("Could not find " + song + " by " + band + " at " + l.getName(i), LOG_ERROR);
                 not_found++;
@@ -87,21 +88,6 @@ int main (int argc, char *argv[]) {
     // If all searches faild, report the song as not found
     if (not_found == l.numSites())
         return NOT_FOUND_EXIT;
-    
-//    
-//    vector<string> lyrics = l.lyrics(song, band);
-//    int errors = 0;
-//    for (int i = 0; i < (int)lyrics.size(); i++) {
-//        if (lyrics[i].length() > MIN_LYR_LEN) {
-//            logger.log(lyrics[i], LOG_NORMAL);
-//        } else if (lyrics[i].length() == 1 && lyrics[i][0] == ERROR_CHAR) {
-//            errors++;
-//        }
-//    }
-//    
-//    // If all curls failed, there was a connection error
-//    if (errors == (int)lyrics.size())
-//        return CONNECTION;
     
     return GOOD;
 }
