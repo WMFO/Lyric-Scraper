@@ -20,9 +20,6 @@ string AZlyrics(string song, string band);
 string LyricsCom(string song, string band);
 // More to come
 
-/*
-    CLASS LYRICS
-*/
 Lyrics::Lyrics() {
     sites = vector<site>(2);
     sites[0].name = "AZlyrics";
@@ -47,35 +44,17 @@ int Lyrics::numSites() {
     return (int)sites.size();
 }
 
-
-/*
-    END CLASS LYRICS
-*/
-
-
-//int numSites(){
-//    return 3; //MUST match the case statement in the next function
-//}
-//
-//string lyrics (string song, string band, int site) {
-//    switch(site){
-//        case 0:
-//            return ""; //reserved
-//        case 1:
-//            return AZlyrics(song, band);
-//        case 2:
-//            return LyricsCom(song, band);
-//        default:
-//            return "";
-//    }
-//}
-
 string AZlyrics(string song, string band){
     song = scrub_str(song);
     band = scrub_str(band);
     removeThe(song);
     string url = "http://www.azlyrics.com/lyrics/" + band + "/" + song + ".html";
     string lyrics = curl_lyrics(url);
+    
+    // Handle errors
+    if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
+        return lyrics;
+    
     int start = lyrics.find("<!-- start of lyrics -->") + 25;
     int end   = lyrics.find("<!-- end of lyrics -->");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
@@ -89,6 +68,10 @@ string LyricsCom(string song, string band){
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
     string lyrics = curl_lyrics(url);
     int start = lyrics.find("<div id=\"lyrics\" class=\"SCREENONLY\">") + 36;
+    // Handle errors
+    if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
+        return lyrics;
+    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 27;
     int end   = lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
@@ -127,6 +110,7 @@ size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp) {
     return count;
 }
 
+// Returns a length-1 string whose character code is ERROR_CHAR upon error
 string curl_lyrics(string url){
     if (DEBUG) cout << url << endl;
     CURL *handle;
@@ -142,7 +126,10 @@ string curl_lyrics(string url){
 
     error = curl_easy_perform(handle);
     curl_easy_cleanup(handle);
-
-    if (!error) return buffer.str();
-    else return "";
+    
+    if (!error)
+        return buffer.str();
+    string out = "a";
+    out[0] = ERROR_CHAR;
+    return out;
 }

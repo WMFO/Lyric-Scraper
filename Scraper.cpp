@@ -22,6 +22,7 @@
 // Error codes
 #define USAGE 1
 #define NOTFOUND 2
+#define CONNECTION 3
 
 
 using namespace std;
@@ -61,27 +62,25 @@ int main (int argc, char *argv[]) {
     
     Lyrics l = Lyrics();
     vector<string> lyrics = l.lyrics(song, band);
+    int errors = 0;
     for (int i = 0; i < (int)lyrics.size(); i++) {
         if (lyrics[i].length() > MIN_LYR_LEN) {
             logger.log(lyrics[i], LOG_NORMAL);
+        } else if (lyrics[i].length() == 1 && lyrics[i][0] == ERROR_CHAR) {
+            errors++;
         }
     }
-
-//    int nsites = numSites();
-//    for (int i = 0; i < nsites; i++){
-//        string result = lyrics(song, band, i);
-//        if (result.length() > MIN_LYR_LEN){
-//            if (OUTPUT) cout << result << endl;
-//            break;
-//        }
-//    }
+    
+    // If all curls failed, there was a connection error
+    if (errors == (int)lyrics.size())
+        return CONNECTION;
     
     return 0;
 }
 
 void log_normal(string err) { 
     if (OUTPUT)
-        cout << err << endl; 
+        cout << err << endl;
 }
 void log_error (string err) { logfile << err << endl; }
 void log_fatal (string err) { logfile << err << endl; }
