@@ -16,13 +16,13 @@ Log::Log(logger n, logger e, logger f) {
 
 int Log::setFunc(logger l, int level) {
     switch (level) {
-        case NORMAL:
+        case LOG_NORMAL:
             normal = l;
             return 1;
-        case ERROR:
+        case LOG_ERROR:
             error = l;
             return 1;
-        case FATAL:
+        case LOG_FATAL:
             fatal = l;
             return 1;
     }
@@ -31,14 +31,17 @@ int Log::setFunc(logger l, int level) {
 
 int Log::log(string msg, int level) {
     switch (level) {
-        case NORMAL:
-            normal(msg);
+        case LOG_NORMAL:
+            if (normal)
+                normal(msg);
             return 1;
-        case ERROR:
-            error(msg);
+        case LOG_ERROR:
+            if (error)
+                error(msg);
             return 1;
-        case FATAL:
-            fatal(msg);
+        case LOG_FATAL:
+            if (fatal)
+                fatal(msg);
             return 1;
     }
     return 0;

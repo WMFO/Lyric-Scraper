@@ -1,19 +1,19 @@
 #include <iostream>
 
 // Log levels
-#define NORMAL 0
-#define ERROR 1
-#define FATAL 2
+#define LOG_NORMAL 0
+#define LOG_ERROR 1
+#define LOG_FATAL 2
 
 using namespace std;
 
 // Function signature for logger
-typedef void(*logger)(string err);
 
 #ifndef Lyric_Scraper_Log_h
 #define Lyric_Scraper_Log_h
 
 class Log {
+    typedef void(*logger)(string err);
 public:
     Log();
     // Initialize with functions to be called on the various logging levels
