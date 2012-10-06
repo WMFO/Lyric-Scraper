@@ -88,7 +88,7 @@ string LyricsCom(string song, string band){
     removeThe(song);
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
     string lyrics = curl_lyrics(url);
-    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 27;
+    int start = lyrics.find("<div id=\"lyrics\" class=\"SCREENONLY\">") + 36;
     int end   = lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);

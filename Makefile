@@ -16,7 +16,7 @@ OTHERPREREQS = Lyrics.h filter.txt Log.h
 all: $(FILE).out
 
 $(FILE).out: $(FILE).cpp $(OTHERFILES) $(OTHERPREREQS)
-	@g++ -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
+	@g++ -g -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
 
 clean:
 	@$(RM) *.o $(FILE).out

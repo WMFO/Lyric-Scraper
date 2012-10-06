@@ -45,7 +45,7 @@ int main (int argc, char *argv[]) {
         logger.setFunc(NULL, LOG_FATAL);
     }
     
-    if (argc != 2) {
+    if (argc != 3) {
         string argv0 = argv[0];
         logger.log("Usage: " + argv0 + " <song> <bands>", LOG_FATAL);
         exit(USAGE);
