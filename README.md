@@ -1,4 +1,4 @@
-Lyric-Scraper
+jLyric-Scraper
 =============
 
 WMFO - Tufts Freeform Radio  
