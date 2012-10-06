@@ -33,13 +33,13 @@ Lyrics::Lyrics() {
 }
 vector<string> Lyrics::lyrics(string song, string band) {
     vector<string> lyrics = vector<string>(sites.size());
-    for (int i = 0; i < sites.size(); i++) {
+    for (int i = 0; i < (int)sites.size(); i++) {
         lyrics[i] = sites[i].f(song, band);
     }
     return lyrics;
 }
 string Lyrics::lyrics(string song, string band, int site) {
-    if (site < 0 || site >= sites.size())
+    if (site < 0 || site >= (int)sites.size())
         return "";
     return sites[site].f(song, band);
 }
