@@ -54,8 +54,7 @@ int main (int argc, char *argv[]) {
             break;
         }
     }
-
-    logger;
+    
     return 0;
 }
 
