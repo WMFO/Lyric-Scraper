@@ -51,7 +51,7 @@ string AZlyrics(string song, string band){
     string url = "http://www.azlyrics.com/lyrics/" + band + "/" + song + ".html";
     string lyrics = curl_lyrics(url);
     
-    // Handle errors
+    // Handle errors passed by curl_lyrics()
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
     
@@ -59,6 +59,7 @@ string AZlyrics(string song, string band){
 
     // find returns npos on no find. Check against '<' in case start == npos by accident
     if (start - 25 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+        // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
         lyrics = "a";
         lyrics[0] = NOT_FOUND_CHAR;
         return lyrics;
@@ -76,7 +77,7 @@ string LyricsCom(string song, string band){
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
     string lyrics = curl_lyrics(url);
     
-    // Handle errors
+    // Handle errors passed by curl_lyrics()
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
     
@@ -84,6 +85,7 @@ string LyricsCom(string song, string band){
     
     // find returns npos on no find. Check against '<' in case start == npos by accident
     if (start - 30 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+        // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
         lyrics = "a";
         lyrics[0] = NOT_FOUND_CHAR;
         return lyrics;
@@ -146,6 +148,8 @@ string curl_lyrics(string url){
     
     if (!error)
         return buffer.str();
+    
+    // Returns a length-1 string whose character code is ERROR_CHAR upon curl error
     string out = "a";
     out[0] = ERROR_CHAR;
     return out;
