@@ -23,7 +23,7 @@
 #define GOOD 0
 #define USAGE 1
 #define CONNECTION 2
-#define NOT_FOUND_EXIT 3
+#define NOT_FOUND 3
 
 
 using namespace std;
@@ -72,11 +72,11 @@ int main (int argc, char *argv[]) {
             logger.log(lyric, LOG_NORMAL);
             break;
         } else if (lyric.length() == 1) {
-            if (lyric[0]) {
+            if (lyric[0] == ERROR_CHAR) {
                 errors++;
                 logger.log("Could not connect to " + l.getName(i) + ".", LOG_ERROR);
             }
-            else if (lyric[0] == NOT_FOUND) {
+            else if (lyric[0] == NOT_FOUND_CHAR) {
                 // logger.log("Could not find " + song + " by " + band + " at " + l.getName(i), LOG_NORMAL);
                 not_found++;
             }
@@ -91,7 +91,7 @@ int main (int argc, char *argv[]) {
     // If all searches faild, report the song as not found
     if (not_found == l.numSites()) {
         logger.log("Could not find " + song + " by " + band + " on any sites.", LOG_ERROR);
-        return NOT_FOUND_EXIT;
+        return NOT_FOUND;
     }
     
     return GOOD;

@@ -60,7 +60,7 @@ string AZlyrics(string song, string band){
     // find returns npos on no find. Check against '<' in case start == npos by accident
     if (start - 25 == lyrics.npos && lyrics[lyrics.npos] != '<') {
         lyrics = "a";
-        lyrics[0] = NOT_FOUND;
+        lyrics[0] = NOT_FOUND_CHAR;
         return lyrics;
     }
     
@@ -85,7 +85,7 @@ string LyricsCom(string song, string band){
     // find returns npos on no find. Check against '<' in case start == npos by accident
     if (start - 36 == lyrics.npos && lyrics[lyrics.npos] != '<') {
         lyrics = "a";
-        lyrics[0] = NOT_FOUND;
+        lyrics[0] = NOT_FOUND_CHAR;
         return lyrics;
     }
     
