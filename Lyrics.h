@@ -27,7 +27,7 @@ public:
     // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
     string lyrics(string song, string band, int site);
     int numSites();
-    string getName(int i);
+    string getName(int site);
 private:
     typedef string(*fetch)(string,string);
     struct site {

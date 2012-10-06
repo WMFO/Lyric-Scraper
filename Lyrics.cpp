@@ -43,6 +43,11 @@ string Lyrics::lyrics(string song, string band, int site) {
 int Lyrics::numSites() {
     return (int)sites.size();
 }
+string Lyrics::getName(int site) {
+    if (site < 0 || site >= (int)sites.size())
+        return "";
+    return sites[site].name;
+}
 
 string AZlyrics(string song, string band){
     song = scrub_str(song);
