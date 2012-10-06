@@ -32,6 +32,7 @@ ofstream logfile;
 void log_normal(string);
 void log_error (string);
 void log_fatal (string);
+string timestamp();
 
 int main (int argc, char *argv[]) {
     
@@ -78,9 +79,19 @@ int main (int argc, char *argv[]) {
     return 0;
 }
 
+string timestamp(){
+    time_t rawtime;
+    time (&rawtime);
+    return ctime(&rawtime);
+}
+
 void log_normal(string err) { 
     if (OUTPUT)
         cout << err << endl;
 }
-void log_error (string err) { logfile << err << endl; }
-void log_fatal (string err) { logfile << err << endl; }
+void log_error (string err) { 
+    logfile << timestamp() << ": " << err << endl;
+}
+void log_fatal (string err) { 
+    logfile << timestamp() << ": " << err << endl;
+}
