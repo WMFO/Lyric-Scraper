@@ -56,6 +56,14 @@ string AZlyrics(string song, string band){
         return lyrics;
     
     int start = lyrics.find("<!-- start of lyrics -->") + 25;
+
+    // find returns npos on no find. Check against '<' in case start == npos by accident
+    if (start - 25 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+        lyrics = "a";
+        lyrics[0] = NOT_FOUND;
+        return lyrics;
+    }
+    
     int end   = lyrics.find("<!-- end of lyrics -->");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
@@ -67,11 +75,20 @@ string LyricsCom(string song, string band){
     removeThe(song);
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
     string lyrics = curl_lyrics(url);
-    int start = lyrics.find("<div id=\"lyrics\" class=\"SCREENONLY\">") + 36;
+    
     // Handle errors
     if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
         return lyrics;
-    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 27;
+    
+    int start = lyrics.find("<div id=\"lyrics\" class=\"SCREENONLY\">") + 36;
+    
+    // find returns npos on no find. Check against '<' in case start == npos by accident
+    if (start - 36 == lyrics.npos && lyrics[lyrics.npos] != '<') {
+        lyrics = "a";
+        lyrics[0] = NOT_FOUND;
+        return lyrics;
+    }
+    
     int end   = lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
