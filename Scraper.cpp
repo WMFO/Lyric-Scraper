@@ -20,7 +20,7 @@
 
 using namespace std;
 
-Log *logger;
+Log logger;
 ofstream logfile;
 void log_normal(string);
 void log_error (string);
@@ -30,13 +30,13 @@ int main (int argc, char *argv[]) {
     
     string logfname = "logfile";
     
-    logger = new Log(log_normal, log_error, log_fatal);
+    logger = Log(log_normal, log_error, log_fatal);
     logfile.open(logfname.c_str());
     if (!logfile.is_open()) {
         cerr << "Could not open logfile: " << logfname << ". Continuing without logging..." << endl;
         // Normal logging goes to cout, so leave it be
-        logger->setFunc(NULL, LOG_ERROR);
-        logger->setFunc(NULL, LOG_FATAL);
+        logger.setFunc(NULL, LOG_ERROR);
+        logger.setFunc(NULL, LOG_FATAL);
     }
     
     assert(argc > 2);
