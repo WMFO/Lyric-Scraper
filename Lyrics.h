@@ -10,8 +10,8 @@
 #include <vector>
 
 #define DEBUG 0
-#define ERROR_CHAR 255
-#define NOT_FOUND 254
+#define ERROR_CHAR 1
+#define NOT_FOUND 2
 
 using namespace std;
 
