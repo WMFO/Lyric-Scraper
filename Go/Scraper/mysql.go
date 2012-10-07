@@ -27,7 +27,7 @@ func search() sql.Rows {
 }
 
 func logMysqlError(err error) {
-
+	// TODO
 }
 
 func connect(user, pass, dbname string) error {

@@ -12,6 +12,7 @@ func dirty(lyrics string) bool {
 	for _, p := range patterns {
 		match, err := regexp.MatchString(p, lyrics)
 		if err != nil {
+			// TODO
 			// Log error
 		} else if regexp.MatchString(p, lyrics) {
 			return true

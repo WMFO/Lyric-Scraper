@@ -23,6 +23,7 @@ func checkAll(song, artist string) (bool, error) {
 	for _, s := range sites {
 		dirty, err := s.check(song, artist)
 		if err == nil {
+			// TODO: log error
 			return dirty, nil
 		}
 	}
