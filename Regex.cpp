@@ -14,3 +14,5 @@ string regex(string input) {
     // system("egrep -o -f" + REGEXFILE);
     return "test...";
 }
+
+// Write function to escape single quotes (expand string first to do linear-time reallocation
