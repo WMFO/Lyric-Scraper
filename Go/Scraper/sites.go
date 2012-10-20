@@ -11,7 +11,7 @@ import (
 var (
 	// Per site
 	CONNECTION = errors.New("connection")
-	SEARCH     = errors.New("serach")
+	SEARCH     = errors.New("search")
 	FORMAT     = errors.New("format") // Ill-formatted html
 	// Per search
 	NO_SUCCESS = errors.New("nosuccess")

@@ -25,8 +25,8 @@ func scrub(str string, dashed bool) string {
 			out[j] = str[i]
 			j++
 		} else if (c == ' ' && dashed){
-            out[j] = '-';
-            j++;
+            out[j] = '-'
+            j++
         }
 	}
 	return string(out[:j])
