@@ -3,7 +3,7 @@
 // Log levels
 #define LOG_NORMAL 0
 #define LOG_ERROR 1
-#define LOG_FATAL 2
+#define LOG_DIRTY 2
 
 using namespace std;
 
@@ -27,7 +27,7 @@ public:
     // Return 1 upon success, else 0
     int log(string err, int level);
 private:
-    logger normal, error, fatal;
+    logger normal, error, dirty;
 };
 
 #endif

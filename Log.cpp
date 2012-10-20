@@ -5,13 +5,13 @@ using namespace std;
 Log::Log() {
     normal = NULL;
     error  = NULL;
-    fatal  = NULL;
+    dirty  = NULL;
 }
 
 Log::Log(logger n, logger e, logger f) {
     normal = n;
     error  = e;
-    fatal  = f;
+    dirty  = f;
 }
 
 int Log::setFunc(logger l, int level) {
@@ -22,8 +22,8 @@ int Log::setFunc(logger l, int level) {
         case LOG_ERROR:
             error = l;
             return 1;
-        case LOG_FATAL:
-            fatal = l;
+        case LOG_DIRTY:
+            dirty = l;
             return 1;
     }
     return 0;
@@ -39,9 +39,9 @@ int Log::log(string msg, int level) {
             if (error)
                 error(msg);
             return 1;
-        case LOG_FATAL:
-            if (fatal)
-                fatal(msg);
+        case LOG_DIRTY:
+            if (dirty)
+                dirty(msg);
             return 1;
     }
     return 0;
