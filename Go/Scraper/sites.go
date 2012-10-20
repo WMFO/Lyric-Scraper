@@ -40,8 +40,8 @@ func init() {
 }
 
 func AZLyrics(song, artist string) (bool, error) {
-	song = scrub(song)
-	artist = scrub(artist)
+	song = scrub(song, false)
+	artist = scrub(artist, false)
 	song = removeThe(song)
 	url := fmt.Sprintf("http://www.azlyrics.com/lyrics/%s/%s.html", artist, song)
 	resp, err := http.Get(url)
@@ -67,8 +67,8 @@ func AZLyrics(song, artist string) (bool, error) {
 }
 
 func LyricsCom(song, artist string) (bool, error) {
-	song = scrub(song)
-	artist = scrub(artist)
+	song = scrub(song, true)
+	artist = scrub(artist, true)
 	song = removeThe(song)
 	url := fmt.Sprintf("http://www.lyrics.com/%s-lyrics-%s.html", song, artist)
 	resp, err := http.Get(url)

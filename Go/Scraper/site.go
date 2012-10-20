@@ -14,7 +14,7 @@ func (s *site) check(song, artist string) (bool, error) {
 	return s.f(song, artist)
 }
 
-func scrub(str string) string {
+func scrub(str string, dashed bool) string {
 	str = strings.ToLower(str)
 	out := make([]byte, len(str))
 	i := 0
@@ -24,7 +24,10 @@ func scrub(str string) string {
 		if (c >= '0' && c <= '9') || (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') {
 			out[j] = str[i]
 			j++
-		}
+		} else if (c == ' ' && dashed){
+            out[j] = '-';
+            j++;
+        }
 	}
 	return string(out[:j])
 }
