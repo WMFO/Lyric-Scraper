@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-var db sql.DB
+var db *sql.DB
 
 func query(q string) error {
 	_, err := db.Exec(q)
