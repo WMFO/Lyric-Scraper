@@ -13,8 +13,7 @@ func dirty(lyrics string) bool {
 	for _, p := range patterns {
 		match, err := regexp.MatchString(p, lyrics)
 		if err != nil {
-			// TODO
-			// Log error
+			regexErrors.Printf("REGEX: %s\nLYRICS: %s", p, lyrics)
 		} else if match {
 			return true
 		}

@@ -21,14 +21,10 @@ func search() *sql.Rows {
 	query := "SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT 100"
 	rows, err := db.Query(query)
 	if err != nil {
-		logMysqlError(err)
+		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		return nil
 	}
 	return rows
-}
-
-func logMysqlError(err error) {
-	// TODO
 }
 
 func connect(user, pass, dbname string) (*sql.DB, error) {

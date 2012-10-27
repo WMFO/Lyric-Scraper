@@ -19,12 +19,26 @@ var (
 
 var sites []*site
 
-func checkAll(song, artist string) (bool, error) {
+// Check each site until one succeeds to download
+// and check the lyrics. Return the first result 
+// from a successful connection and search
+// If all fail, return that none succeeded
+func checkAllSites(song, artist string) (bool, error) {
 	for _, s := range sites {
 		dirty, err := s.check(song, artist)
 		if err == nil {
-			// TODO: log error
 			return dirty, nil
+		} else {
+			switch err {
+			case CONNECTION:
+				networkErrors.Printf("%s - title: %s artist: %s - CONNECTION FAILED", s.name, song, artist)
+			case SEARCH:
+				networkErrors.Printf("%s - title: %s artist: %s - SEARCH FAILED", s.name, song, artist)
+			case FORMAT:
+				networkErrors.Printf("%s - title: %s artist: %s - ILL-FORMATTED PAGE", s.name, song, artist)
+			case NO_SUCCESS:
+				panic("s.check() returned NO_SUCCESS - this should never happen")
+			}
 		}
 	}
 	return false, NO_SUCCESS

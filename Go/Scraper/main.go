@@ -14,6 +14,15 @@ func main() {
 	}
 
 	loadPatterns(file)
+	
+	
+	net, err := os.OpenFile("networkErrors.log", os.O_APPEND, 0220)
+	song, err := os.OpenFile("songClassification.log", os.O_APPEND, 0220)
+	dirty, err := os.OpenFile("dirtySongs.log", os.O_APPEND, 0220)
+	regex, err := os.OpenFile("regex.log", os.O_APPEND, 0220)
+	
+	initLogging(net, song, dirty, regex)
+	
 	connect("user", "pass", "mysqldb")
 	checkOneSong()
 }
@@ -24,11 +33,9 @@ func checkOneSong() {
 		var number int
 		var artist, title, album string
 		err := rows.Scan(&number, &artist, &title, &album)
-		dirty, err := checkAll(title, artist)
+		dirty, err := checkAllSites(title, artist)
 		if err != nil {
-			// TODO
-			// Log error
-			// return
+			networkErrors.Printf("NETWORK ERROR: %s", err.Error())
 		}
 		var code string
 		var log string
@@ -42,11 +49,8 @@ func checkOneSong() {
 		q := fmt.Sprintf("UPDATE CART SET SCHED_CODES='%s' WHERE NUMBER='%d'", code, number)
 		err = query(q)
 		if err != nil {
-			// TODO
-			// Log error
-			// return
+			networkErrors.Printf("SQL ERROR: %s", err.Error())
 		}
-		msg := fmt.Sprintf("UPDATE: %s by %s (id %d) was marked %s\n", title, artist, number, log)
-
+		songClass.Printf("UPDATE: Title: %s Artist: %s (id %d) was marked %s\n", title, artist, number, log)
 	}
 }
