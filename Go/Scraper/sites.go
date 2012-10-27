@@ -44,6 +44,8 @@ func checkAllSites(song, artist string) (bool, error) {
 	return false, NO_SUCCESS
 }
 
+// In go, any function named "init" is called before main
+// This initializes the slice of sites
 func init() {
 	sites = make([]*site, 2)
 	sites[0] = new(site)

@@ -4,6 +4,11 @@ import (
 	"strings"
 )
 
+/*
+	Each lyrics site is of type site, which allows us to loop over
+	all sites quickly (yay, function pointers!)
+*/
+
 type site struct {
 	name string
 	f    func(string, string) (bool, error)
@@ -14,6 +19,11 @@ func (s *site) check(song, artist string) (bool, error) {
 	return s.f(song, artist)
 }
 
+/*
+	If scrub is called with dashed, spaces are converted to dashes
+	Otherwise they are simply omitted
+	(ie, This Is A Song --> This-Is-A-Song or ThisIsASong)
+*/
 func scrub(str string, dashed bool) string {
 	str = strings.ToLower(str)
 	out := make([]byte, len(str))
@@ -32,6 +42,7 @@ func scrub(str string, dashed bool) string {
 	return string(out[:j])
 }
 
+// Remove the word "the" from a string
 func removeThe(str string) string {
 	return strings.Join(strings.Split(str, "the"), "")
 }

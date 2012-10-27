@@ -9,6 +9,8 @@ import (
 
 var patterns []string
 
+// Checks against each regex in the patterns array
+// and returns true if any of them matched
 func dirty(lyrics string) bool {
 	for _, p := range patterns {
 		match, err := regexp.MatchString(p, lyrics)
@@ -21,6 +23,7 @@ func dirty(lyrics string) bool {
 	return false
 }
 
+// Load patterns line by line into the patterns slice
 func loadPatterns(r io.Reader) error {
 	buf := new(bytes.Buffer)
 	_, err := buf.ReadFrom(r)

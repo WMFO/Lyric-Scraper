@@ -45,25 +45,33 @@ func main() {
 		os.Exit(2)
 	}
 	
-	checkOneSong()
+	checkNSong(1)
 }
 
-func checkOneSong() {
-	rows := search()
+func checkOneSong(n int) {
+	
+	// Get n songs
+	rows := search(n)
+	
+	// If the search failed
+	// Don't log the error here - it will have been logged in the mysql module
 	if rows == nil {
 		return
 	}
-	if rows.Next() {
+	
+	for rows.Next() {
 		var number int
 		var artist, title, album string
 		err := rows.Scan(&number, &artist, &title, &album)
 		dirty, err := checkAllSites(title, artist)
-		if err != nil {
-			networkErrors.Printf("NETWORK ERROR: %s", err.Error())
-		}
+		
 		var code string
 		var log string
-		if dirty {
+		if err != nil {
+			networkErrors.Printf("NETWORK ERROR: %s", err.Error())
+			code = "NOT FOUND"
+			log = "NOT FOUND"
+		} else if dirty {
 			code = "E"
 			log = "DIRTY"
 		} else {
@@ -75,6 +83,6 @@ func checkOneSong() {
 		if err != nil {
 			networkErrors.Printf("SQL ERROR: %s", err.Error())
 		}
-		songClass.Printf("UPDATE: Title: %s Artist: %s (id %d) was marked %s\n", title, artist, number, log)
+		songClass.Printf("%s: Title: %s Artist: %s (id %d) was marked %s\n", log, title, artist, number)
 	}
 }
