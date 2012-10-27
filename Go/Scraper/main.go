@@ -38,7 +38,7 @@ func main() {
 
 	initLogging(net, song, dirty, regex)
 
-	err = connect("user", "pass", "mysqldb")
+	err = connect("user", "pass", "Rivendell")
 	
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "SQL ERROR: %s\n", err.Error())

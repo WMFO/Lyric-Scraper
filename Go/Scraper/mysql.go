@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+    _ "code.google.com/p/go-mysql-driver/mysql"
 )
 
 var db *sql.DB
