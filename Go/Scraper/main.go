@@ -22,7 +22,13 @@ func main() {
 
 	initLogging(net, song, dirty, regex)
 
-	connect("user", "pass", "mysqldb")
+	err = connect("user", "pass", "mysqldb")
+	
+	if err != nil {
+		networkErrors.Printf("SQL ERROR: %s", err.Error())
+		os.Exit(2)
+	}
+	
 	checkOneSong()
 }
 
