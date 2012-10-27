@@ -15,22 +15,22 @@ func main() {
 
 	loadPatterns(file)
 
-	net, err := os.OpenFile("networkErrors.log", os.O_APPEND, 0220)
+	net, err := os.OpenFile("networkErrors.log", os.O_APPEND, 0660)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: could not open %s: %s\n", "networkErrors.log", err.Error());
 		os.Exit(1)
 	}
-	song, err := os.OpenFile("songClassification.log", os.O_APPEND, 0220)
+	song, err := os.OpenFile("songClassification.log", os.O_APPEND, 0660)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: could not open %s: %s\n", "songClassification.log", err.Error());
 		os.Exit(1)
 	}
-	dirty, err := os.OpenFile("dirtySongs.log", os.O_APPEND, 0220)
+	dirty, err := os.OpenFile("dirtySongs.log", os.O_APPEND, 0660)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: could not open %s: %s\n", "dirtySongs.log", err.Error());
 		os.Exit(1)
 	}
-	regex, err := os.OpenFile("regex.log", os.O_APPEND, 0220)
+	regex, err := os.OpenFile("regex.log", os.O_APPEND, 0660)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error: could not open %s: %s\n", "regex.log", err.Error());
 		os.Exit(1)
