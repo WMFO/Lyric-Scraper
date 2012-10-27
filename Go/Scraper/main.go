@@ -16,9 +16,25 @@ func main() {
 	loadPatterns(file)
 
 	net, err := os.OpenFile("networkErrors.log", os.O_APPEND, 0220)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: could not open %s\n", "networkErrors.log");
+		os.Exit(1)
+	}
 	song, err := os.OpenFile("songClassification.log", os.O_APPEND, 0220)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: could not open %s\n", "songClassification.log");
+		os.Exit(1)
+	}
 	dirty, err := os.OpenFile("dirtySongs.log", os.O_APPEND, 0220)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: could not open %s\n", "dirtySongs.log");
+		os.Exit(1)
+	}
 	regex, err := os.OpenFile("regex.log", os.O_APPEND, 0220)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: could not open %s\n", "regex.log");
+		os.Exit(1)
+	}
 
 	initLogging(net, song, dirty, regex)
 
