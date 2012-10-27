@@ -45,10 +45,10 @@ func main() {
 		os.Exit(2)
 	}
 	
-	checkNSong(1)
+	checkNSongs(1)
 }
 
-func checkOneSong(n int) {
+func checkNSongs(n int) {
 	
 	// Get n songs
 	rows := search(n)

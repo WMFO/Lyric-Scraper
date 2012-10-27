@@ -8,10 +8,10 @@ import (
 
 var db *sql.DB
 
-// func query(q string) error {
-// 	_, err := db.Exec(q)
-// 	return err
-// }
+func query(q string) error {
+	_, err := db.Exec(q)
+	return err
+}
 
 func search(n int) *sql.Rows {
 	query := fmt.Sprintf("SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT %d", n)
