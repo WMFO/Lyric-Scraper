@@ -1,11 +1,19 @@
 package main
 
 import (
-	"database/sql"
+	"fmt"
+	"os"
 )
 
 func main() {
-	loadPatterns("regexfile.txt")
+	file, err := os.Open("regexfile.txt")
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error: could not open %s\n", "regexfile.txt")
+		os.Exit(1)
+	}
+
+	loadPatterns(file)
 	connect("user", "pass", "mysqldb")
 	checkOneSong()
 }
@@ -32,7 +40,7 @@ func checkOneSong() {
 			log = "CLEAN"
 		}
 		q := fmt.Sprintf("UPDATE CART SET SCHED_CODES='%s' WHERE NUMBER='%d'", code, number)
-		err := query(q)
+		err = query(q)
 		if err != nil {
 			// TODO
 			// Log error

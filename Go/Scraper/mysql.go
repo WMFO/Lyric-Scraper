@@ -2,11 +2,12 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 )
 
 const (
-	USER = 
-	PASS = 
+	USER = "Test"
+	PASS = "Test"
 )
 
 var db sql.DB
@@ -16,7 +17,7 @@ func query(q string) error {
 	return err
 }
 
-func search() sql.Rows {
+func search() *sql.Rows {
 	query := "SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT 100"
 	rows, err := db.Query(query)
 	if err != nil {
@@ -30,7 +31,6 @@ func logMysqlError(err error) {
 	// TODO
 }
 
-func connect(user, pass, dbname string) error {
-	var err error
-	db, error = sql.Open("mysql", fmt.Sprintf("%s:%s@%s?charset=utf8", user, pass, dbname))
+func connect(user, pass, dbname string) (*sql.DB, error) {
+	return sql.Open("mysql", fmt.Sprintf("%s:%s@%s?charset=utf8", user, pass, dbname))
 }

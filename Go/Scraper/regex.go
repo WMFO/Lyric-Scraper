@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"io"
 	"regexp"
 	"strings"
@@ -14,7 +15,7 @@ func dirty(lyrics string) bool {
 		if err != nil {
 			// TODO
 			// Log error
-		} else if regexp.MatchString(p, lyrics) {
+		} else if match {
 			return true
 		}
 	}
@@ -23,6 +24,12 @@ func dirty(lyrics string) bool {
 
 func loadPatterns(r io.Reader) error {
 	buf := new(bytes.Buffer)
-	buf.ReadFrom(r)
-	patterns := strings.Split(buf.String(), "\n")
+	_, err := buf.ReadFrom(r)
+
+	if err != nil {
+		return err
+	}
+
+	patterns = strings.Split(buf.String(), "\n")
+	return nil
 }
