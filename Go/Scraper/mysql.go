@@ -18,7 +18,6 @@ func search() *sql.Rows {
 	query := "SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT 100"
 	rows, err := db.Query(query)
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "SQL ERROR: %s", err.Error())
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		return nil
 	}
