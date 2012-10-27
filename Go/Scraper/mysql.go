@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
     _ "code.google.com/p/go-mysql-driver/mysql"
 )
 
@@ -17,6 +18,7 @@ func search() *sql.Rows {
 	query := "SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT 100"
 	rows, err := db.Query(query)
 	if err != nil {
+		fmt.Printf(os.Stderr, "SQL ERROR: %s", err.Error())
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		return nil
 	}

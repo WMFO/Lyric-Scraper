@@ -51,6 +51,9 @@ func main() {
 
 func checkOneSong() {
 	rows := search()
+	if rows == nil {
+		return
+	}
 	if rows.Next() {
 		var number int
 		var artist, title, album string
