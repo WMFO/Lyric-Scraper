@@ -46,9 +46,11 @@ func checkAllSites(song, artist string) (bool, error) {
 
 func init() {
 	sites = make([]*site, 2)
+	sites[0] = new(site)
 	sites[0].name = "AZLyrics"
 	sites[0].f = AZLyrics
 
+	sites[1] = new(site)
 	sites[1].name = "LyricsCom"
 	sites[1].f = LyricsCom
 }
