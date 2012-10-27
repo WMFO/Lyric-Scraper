@@ -14,15 +14,14 @@ func main() {
 	}
 
 	loadPatterns(file)
-	
-	
+
 	net, err := os.OpenFile("networkErrors.log", os.O_APPEND, 0220)
 	song, err := os.OpenFile("songClassification.log", os.O_APPEND, 0220)
 	dirty, err := os.OpenFile("dirtySongs.log", os.O_APPEND, 0220)
 	regex, err := os.OpenFile("regex.log", os.O_APPEND, 0220)
-	
+
 	initLogging(net, song, dirty, regex)
-	
+
 	connect("user", "pass", "mysqldb")
 	checkOneSong()
 }
