@@ -22,6 +22,8 @@ func search() *sql.Rows {
 	return rows
 }
 
-func connect(user, pass, dbname string) (*sql.DB, error) {
-	return sql.Open("mysql", fmt.Sprintf("%s:%s@%s?charset=utf8", user, pass, dbname))
+func connect(user, pass, dbname string) error {
+	var err error
+	db, err = sql.Open("mysql", fmt.Sprintf("%s:%s@%s?charset=utf8", user, pass, dbname))
+	return err
 }
