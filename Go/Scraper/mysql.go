@@ -5,11 +5,6 @@ import (
 	"fmt"
 )
 
-const (
-	USER = "Test"
-	PASS = "Test"
-)
-
 var db sql.DB
 
 func query(q string) error {
