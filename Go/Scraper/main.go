@@ -38,14 +38,14 @@ func main() {
 
 	initLogging(net, song, dirty, regex)
 
-	err = connect("user", "pass", "Rivendell")
+	err = connect("root", "password", "Rivendell")
 	
 	if err != nil {
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		os.Exit(2)
 	}
 	
-	checkNSongs(1)
+	checkNSongs(20)
 }
 
 func checkNSongs(n int) {
@@ -79,10 +79,11 @@ func checkNSongs(n int) {
 			log = "CLEAN"
 		}
 		q := fmt.Sprintf("UPDATE CART SET SCHED_CODES='%s' WHERE NUMBER='%d'", code, number)
-		err = query(q)
+        fmt.Printf("%s\n", q);
+        err = query(q)
 		if err != nil {
 			networkErrors.Printf("SQL ERROR: %s", err.Error())
 		}
-		songClass.Printf("%s: Title: %s Artist: %s (id %d) was marked %s\n", log, title, artist, number)
+		songClass.Printf("%s: Title: %s Artist: %s (id %d)\n", log, title, artist, number)
 	}
 }

@@ -5,6 +5,7 @@ import (
 	"io"
 	"regexp"
 	"strings"
+    "fmt"
 )
 
 var patterns []string
@@ -13,10 +14,14 @@ var patterns []string
 // and returns true if any of them matched
 func dirty(lyrics string) bool {
 	for _, p := range patterns {
+        if(p == ""){
+            continue
+        }
 		match, err := regexp.MatchString(p, lyrics)
 		if err != nil {
 			regexErrors.Printf("REGEX: %s\nLYRICS: %s", p, lyrics)
 		} else if match {
+            fmt.Printf("Found match %s\n", p)
 			return true
 		}
 	}
