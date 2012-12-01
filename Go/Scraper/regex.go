@@ -8,7 +8,7 @@ import (
 )
 
 var patterns []string
-var regexps *[]regexp.Regexp
+var regexps []*regexp.Regexp
 
 // Checks against each regex in the patterns array
 // and returns true if any of them matched
@@ -47,12 +47,15 @@ func loadPatterns(r io.Reader) error {
 	}
 
 	patterns = strings.Split(buf.String(), "\n")
-
+    
+    regexps = make([]*regexp.Regexp)
+    
 	for i, p := range patterns {
 		if p == "" {
 			continue
 		}
-		regexps[i], _ = Compile(p)
+		regexp = append(regexp, regexp.Compile(p))
+        //regexps[i], _ = regexp.Compile(p)
 	}
 	return nil
 }
