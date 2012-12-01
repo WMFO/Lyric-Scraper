@@ -81,7 +81,7 @@ func AZLyrics(song, artist string) (bool, error) {
 		return false, FORMAT
 	}
 
-	return dirty(strings.ToLower(strs[0])), nil
+	return dirty(strings.ToLower(strs[0]), song, artist), nil
 }
 
 func LyricsCom(song, artist string) (bool, error) {
@@ -108,5 +108,5 @@ func LyricsCom(song, artist string) (bool, error) {
 		return false, FORMAT
 	}
 
-	return dirty(strings.ToLower(strs[0])), nil
+	return dirty(strings.ToLower(strs[0]), song, artist), nil
 }

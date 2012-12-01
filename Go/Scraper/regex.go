@@ -8,15 +8,15 @@ import (
 )
 
 var patterns []string
-var regexps []*regexp.Regexp
+var expressions []*regexp.Regexp
 
 // Checks against each regex in the patterns array
 // and returns true if any of them matched
-func dirty(lyrics string) bool {
-	for _, r := range regexps {
+func dirty(lyrics, song, artist string) bool {
+	for _, r := range expressions {
 		match := r.FindString(lyrics)
 		if match != "" {
-			dirtySong.Printf("Bad word: %s matches regexp: %s in song: %s by artist: %s", match, r.String(), "N/A", "N/A")
+			dirtySong.Printf("Bad word: %s matches regexp: %s in song: %s by artist: %s", match, r.String(), song, artist)
 			return true
 		}
 	}
@@ -48,13 +48,13 @@ func loadPatterns(r io.Reader) error {
 
 	patterns = strings.Split(buf.String(), "\n")
     
-    regexps = make([]*regexp.Regexp)
+    expressions = make([]*regexp.Regexp)
     
 	for i, p := range patterns {
 		if p == "" {
 			continue
 		}
-		regexp = append(regexp, regexp.Compile(p))
+		expressions = append(expressions, regexp.Compile(p))
         //regexps[i], _ = regexp.Compile(p)
 	}
 	return nil
