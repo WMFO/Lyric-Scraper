@@ -58,10 +58,11 @@ func init() {
 }
 
 func AZLyrics(song, artist string) (bool, error) {
-	song = scrub(song, false)
-	artist = scrub(artist, false)
-	song = removeThe(song)
-	url := fmt.Sprintf("http://www.azlyrics.com/lyrics/%s/%s.html", artist, song)
+	scrsong := scrub(song, false)
+	scrartist := scrub(artist, false)
+	scrsong = removeThe(scrsong)
+	site := "AZlyrics"
+	url := fmt.Sprintf("http://www.azlyrics.com/lyrics/%s/%s.html", scrartist, scrsong)
 	resp, err := http.Get(url)
 	if err != nil {
 		return false, err
@@ -81,14 +82,15 @@ func AZLyrics(song, artist string) (bool, error) {
 		return false, FORMAT
 	}
 
-	return dirty(strings.ToLower(strs[0]), song, artist), nil
+	return dirty(strings.ToLower(strs[0]), song, artist, site), nil
 }
 
 func LyricsCom(song, artist string) (bool, error) {
-	song = scrub(song, true)
-	artist = scrub(artist, true)
-	song = removeThe(song)
-	url := fmt.Sprintf("http://www.lyrics.com/%s-lyrics-%s.html", song, artist)
+	scrsong := scrub(song, true)
+	scrartist := scrub(artist, true)
+	scrsong = removeThe(scrsong)
+	site := "Lyrics.com"
+	url := fmt.Sprintf("http://www.lyrics.com/%s-lyrics-%s.html", scrsong, scrartist)
 	resp, err := http.Get(url)
 	if err != nil {
 		return false, err
@@ -108,5 +110,5 @@ func LyricsCom(song, artist string) (bool, error) {
 		return false, FORMAT
 	}
 
-	return dirty(strings.ToLower(strs[0]), song, artist), nil
+	return dirty(strings.ToLower(strs[0]), song, artist, site), nil
 }

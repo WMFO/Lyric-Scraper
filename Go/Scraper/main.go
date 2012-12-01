@@ -69,13 +69,13 @@ func checkNSongs(n int) {
 		var log string
 		if err != nil {
 			networkErrors.Printf("NETWORK ERROR: %s", err.Error())
-			code = "NOT FOUND"
+			code = "U          ."
 			log = "NOT FOUND"
 		} else if dirty {
-			code = "E"
+			code = "E          ."
 			log = "DIRTY"
 		} else {
-			code = "S"
+			code = "S          ."
 			log = "CLEAN"
 		}
 		q := fmt.Sprintf("UPDATE CART SET SCHED_CODES='%s' WHERE NUMBER='%d'", code, number)
