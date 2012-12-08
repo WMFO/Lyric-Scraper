@@ -3,7 +3,15 @@ package main
 import (
 	"fmt"
 	"os"
+	"strconv"
 )
+
+const VERSION = 1
+const UNKNOWN = "UNKNOWN    ."
+const EXPLICIT = "EXPLICIT   ."
+const SAFE = "SAFE       ."
+const USER = ""
+const PASSWORD = ""
 
 func main() {
 	file, err := os.Open("regexfile.txt")
@@ -38,14 +46,25 @@ func main() {
 
 	initLogging(net, song, dirty, regex)
 
-	err = connect("root", "password", "Rivendell")
+	err = connect(USER, PASSWORD, "Rivendell")
 
 	if err != nil {
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		os.Exit(2)
 	}
-
-	checkNSongs(20)
+    
+    s := os.Args[1]
+	var n int
+	if s == "all" {
+		n = -1
+	} else {
+		n, err = strconv.Atoi(s)
+		if err != nil {
+			networkErrors.Printf("Bad command line args, exiting, %s", err.Error())
+			os.Exit(1)
+		}
+	}
+	checkNSongs(n)
 }
 
 func checkNSongs(n int) {
@@ -69,16 +88,16 @@ func checkNSongs(n int) {
 		var log string
 		if err != nil {
 			networkErrors.Printf("NETWORK ERROR: %s", err.Error())
-			code = "U          ."
+			code = UNKNOWN
 			log = "NOT FOUND"
 		} else if dirty {
-			code = "E          ."
+			code = EXPLICIT
 			log = "DIRTY"
 		} else {
-			code = "S          ."
+			code = SAFE
 			log = "CLEAN"
 		}
-		q := fmt.Sprintf("UPDATE CART SET SCHED_CODES='%s' WHERE NUMBER='%d'", code, number)
+		q := fmt.Sprintf("UPDATE CART SET NOTES='flaggedBy=Scraper%d', SCHED_CODES='%s' WHERE NUMBER='%d'", VERSION, code, number)
 		fmt.Printf("%s\n", q)
 		err = query(q)
 		if err != nil {

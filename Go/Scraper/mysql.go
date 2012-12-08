@@ -14,7 +14,12 @@ func query(q string) error {
 }
 
 func search(n int) *sql.Rows {
-	query := fmt.Sprintf("SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT %d", n)
+	var query string
+	if n == -1 {
+		query = "SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL"
+	} else {
+		query = fmt.Sprintf("SELECT NUMBER,ARTIST,TITLE,ALBUM FROM CART WHERE SCHED_CODES IS NULL LIMIT %d", n)
+	}
 	rows, err := db.Query(query)
 	if err != nil {
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
