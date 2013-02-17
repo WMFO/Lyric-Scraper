@@ -5,6 +5,7 @@
 //
 
 #include "Lyrics.h"
+using namespace std;
 
 //Precondition: str is lowercase.
 void removeThe(string str);
@@ -19,21 +20,33 @@ string AZlyrics(string song, string band);
 string LyricsCom(string song, string band);
 // More to come
 
-int numSites(){
-    return 3; //MUST match the case statement in the next function
+Lyrics::Lyrics() {
+    sites = vector<site>(2);
+    sites[0].name = "AZlyrics";
+    sites[0].f    = AZlyrics;
+    
+    sites[1].name = "LyricsCom";
+    sites[1].f    = LyricsCom;
 }
-
-string lyrics (string song, string band, int site) {
-    switch(site){
-        case 0:
-            return ""; //reserved
-        case 1:
-            return AZlyrics(song, band);
-        case 2:
-            return LyricsCom(song, band);
-        default:
-            return "";
+vector<string> Lyrics::lyrics(string song, string band) {
+    vector<string> lyrics = vector<string>(sites.size());
+    for (int i = 0; i < (int)sites.size(); i++) {
+        lyrics[i] = sites[i].f(song, band);
     }
+    return lyrics;
+}
+string Lyrics::lyrics(string song, string band, int site) {
+    if (site < 0 || site >= (int)sites.size())
+        return "";
+    return sites[site].f(song, band);
+}
+int Lyrics::numSites() {
+    return (int)sites.size();
+}
+string Lyrics::getName(int site) {
+    if (site < 0 || site >= (int)sites.size())
+        return "";
+    return sites[site].name;
 }
 
 string AZlyrics(string song, string band){
@@ -42,8 +55,24 @@ string AZlyrics(string song, string band){
     removeThe(song);
     string url = "http://www.azlyrics.com/lyrics/" + band + "/" + song + ".html";
     string lyrics = curl_lyrics(url);
-    int start = lyrics.find("<!-- start of lyrics -->") + 25;
-    int end   = lyrics.find("<!-- end of lyrics -->");
+    
+    // Handle errors passed by curl_lyrics()
+    if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
+        return lyrics;
+    
+    int start = (int)lyrics.find("<!-- start of lyrics -->") + 25;
+
+    // find returns npos on no find. Check against '<' in case start == npos by accident
+    // this if statement solely checks if the start position was found, 
+    // if not, then lyrics weren't found on this website and we return NOT_FOUND_CHAR
+    if (start - 25 == (int)lyrics.npos && lyrics[lyrics.npos] != '<') {
+        // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
+        lyrics = "a";
+        lyrics[0] = NOT_FOUND_CHAR;
+        return lyrics;
+    }
+    
+    int end   = (int)lyrics.find("<!-- end of lyrics -->");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
 }
@@ -54,8 +83,24 @@ string LyricsCom(string song, string band){
     removeThe(song);
     string url = "http://www.lyrics.com/" + song + "-lyrics-" + band + ".html";
     string lyrics = curl_lyrics(url);
-    int start = lyrics.find("<!-- CURRENT LYRIC -->") + 27;
-    int end   = lyrics.find("---");
+    
+    // Handle errors passed by curl_lyrics()
+    if (lyrics.length() == 1 && lyrics[0] == ERROR_CHAR)
+        return lyrics;
+    
+    int start = (int)lyrics.find("<!-- CURRENT LYRIC -->") + 30;
+    
+    // this if statement solely checks if the start position was found, 
+    // if not, then lyrics weren't found on this website
+    // find returns npos on no find. Check against '<' in case start == npos by accident
+    if (start - 30 == (int) lyrics.npos && lyrics[lyrics.npos] != '<') {
+        // Returns a length-1 string whose character code is NOT_FOUND_CHAR for no search results
+        lyrics = "a";
+        lyrics[0] = NOT_FOUND_CHAR;
+        return lyrics;
+    }
+    
+    int end   = (int)lyrics.find("---");
     transform(lyrics.begin(), lyrics.end(), lyrics.begin(), ::tolower);
     return lyrics.substr(start, end-start);
 }
@@ -93,6 +138,7 @@ size_t write_data(char *buffer, size_t size, size_t nmemb, void *userp) {
     return count;
 }
 
+// Returns a length-1 string whose character code is ERROR_CHAR upon error
 string curl_lyrics(string url){
     if (DEBUG) cout << url << endl;
     CURL *handle;
@@ -108,7 +154,12 @@ string curl_lyrics(string url){
 
     error = curl_easy_perform(handle);
     curl_easy_cleanup(handle);
-
-    if (!error) return buffer.str();
-    else return "";
+    
+    if (!error)
+        return buffer.str();
+    
+    // Returns a length-1 string whose character code is ERROR_CHAR upon curl error
+    string out = "a";
+    out[0] = ERROR_CHAR;
+    return out;
 }
