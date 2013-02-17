@@ -8,15 +8,15 @@ INSTALLDIR=/opt/wmfo/lyric-scraper
 OWNER = root
 MOD = 755
 FILE = Scraper
-OTHERFILES = Lyrics.cpp
-OTHERPREREQS = Lyrics.h filter.txt
+OTHERFILES = Lyrics.cpp Log.cpp
+OTHERPREREQS = Lyrics.h filter.txt Log.h
 
 .PHONY: all clean install uninstall
 
 all: $(FILE).out
 
 $(FILE).out: $(FILE).cpp $(OTHERFILES) $(OTHERPREREQS)
-	@g++ -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
+	@g++ -g -o $@ $< $(OTHERFILES) -Wall -Wextra -Werror -lcurl
 
 clean:
 	@$(RM) *.o $(FILE).out
