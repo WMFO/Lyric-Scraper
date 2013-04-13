@@ -52,8 +52,8 @@ func main() {
 		networkErrors.Printf("SQL ERROR: %s", err.Error())
 		os.Exit(2)
 	}
-    
-    s := os.Args[1]
+
+	s := os.Args[1]
 	var n int
 	if s == "all" {
 		n = -1
