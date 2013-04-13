@@ -2,9 +2,11 @@ package main
 
 import (
 	"bytes"
+	"encoding/xml"
 	"errors"
 	"fmt"
 	"net/http"
+	"net/url"
 	"strings"
 )
 
@@ -47,7 +49,7 @@ func checkAllSites(song, artist string) (bool, error) {
 // In go, any function named "init" is called before main
 // This initializes the slice of sites
 func init() {
-	sites = make([]*site, 2)
+	sites = make([]*site, 3)
 	sites[0] = new(site)
 	sites[0].name = "AZLyrics"
 	sites[0].f = AZLyrics
@@ -55,6 +57,10 @@ func init() {
 	sites[1] = new(site)
 	sites[1].name = "LyricsCom"
 	sites[1].f = LyricsCom
+
+	sites[2] = new(site)
+	sites[2].name = "ChartLyrics"
+	sites[2].f = ChartLyrics
 }
 
 func AZLyrics(song, artist string) (bool, error) {
@@ -111,4 +117,61 @@ func LyricsCom(song, artist string) (bool, error) {
 	}
 
 	return dirty(strings.ToLower(strs[0]), song, artist, site), nil
+}
+
+type Result struct {
+	LyricChecksum string
+	LyricId       string
+	Lyric         string
+	Artist        string
+	Song          string
+}
+
+type CLyrics struct {
+	SearchLyricResult []Result
+}
+
+func ChartLyrics(song, artist string) (bool, error) {
+	scrsong := url.QueryEscape(song)
+	scrartist := url.QueryEscape(artist)
+	site := "chartlyrics.com"
+	searchurl := fmt.Sprintf("http://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=%s&song=%s", scrartist, scrsong)
+	resp, err := http.Get(searchurl)
+	if err != nil {
+		return false, err
+	}
+
+	v := CLyrics{}
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	err = xml.Unmarshal([]byte(buf.String()), &v)
+	match := Result{}
+	if err != nil {
+		return false, err
+	}
+	for i := 0; i < len(v.SearchLyricResult); i++ {
+		if v.SearchLyricResult[i].Song == song && v.SearchLyricResult[i].Artist == artist {
+			match = v.SearchLyricResult[i]
+			break
+		}
+	}
+	if match.LyricId == "" {
+		return false, SEARCH
+	}
+	lyricsurl := fmt.Sprintf("http://api.chartlyrics.com/apiv1.asmx/GetLyric?lyricId=%s&lyricCheckSum=%s",
+		match.LyricId, match.LyricChecksum)
+	resp, err = http.Get(lyricsurl)
+	if err != nil {
+		return false, err
+	}
+	buf.ReadFrom(resp.Body)
+	err = xml.Unmarshal([]byte(buf.String()), &match)
+	if err != nil {
+		return false, err
+	}
+
+	if match.Lyric == "" {
+		return false, SEARCH
+	}
+	return dirty(strings.ToLower(match.Lyric), song, artist, site), nil
 }
