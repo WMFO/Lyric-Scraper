@@ -132,12 +132,14 @@ type CLyrics struct {
 }
 
 func ChartLyrics(song, artist string) (bool, error) {
+	fmt.Printf("got to chartLyrics at all...\n")
 	scrsong := url.QueryEscape(song)
 	scrartist := url.QueryEscape(artist)
 	site := "chartlyrics.com"
 	searchurl := fmt.Sprintf("http://api.chartlyrics.com/apiv1.asmx/SearchLyric?artist=%s&song=%s", scrartist, scrsong)
 	resp, err := http.Get(searchurl)
 	if err != nil {
+		fmt.Printf("error in first chartlyrics query: %+v\n", err)
 		return false, err
 	}
 
@@ -147,31 +149,43 @@ func ChartLyrics(song, artist string) (bool, error) {
 	err = xml.Unmarshal([]byte(buf.String()), &v)
 	match := Result{}
 	if err != nil {
+		fmt.Printf("error in parsing first chartlyrics response: %+v\n", err)
 		return false, err
 	}
 	for i := 0; i < len(v.SearchLyricResult); i++ {
 		if v.SearchLyricResult[i].Song == song && v.SearchLyricResult[i].Artist == artist {
-			match = v.SearchLyricResult[i]
+			fmt.Printf("entire searchlyricresult: %+v\n", v.SearchLyricResult[i])
+			match.LyricId = v.SearchLyricResult[i].LyricId
+			match.LyricChecksum = v.SearchLyricResult[i].LyricChecksum
+			match.Artist = v.SearchLyricResult[i].Artist
+			match.Song = v.SearchLyricResult[i].Song
 			break
 		}
 	}
+	fmt.Printf("match things\n LyricId:%s\n LyricCheckSum:%s\n Song:%s\n Artist:%s\n", match.LyricId, match.LyricChecksum, match.Song, match.Artist)
 	if match.LyricId == "" {
+		fmt.Printf("nothing in the results matched...\n")
 		return false, SEARCH
 	}
 	lyricsurl := fmt.Sprintf("http://api.chartlyrics.com/apiv1.asmx/GetLyric?lyricId=%s&lyricCheckSum=%s",
 		match.LyricId, match.LyricChecksum)
 	resp, err = http.Get(lyricsurl)
 	if err != nil {
+		fmt.Printf("error in second chartlyrics response: %+v\n", err)
 		return false, err
 	}
 	buf.ReadFrom(resp.Body)
 	err = xml.Unmarshal([]byte(buf.String()), &match)
 	if err != nil {
+		fmt.Printf("error in second xml parsing: %+v\n", err)
 		return false, err
 	}
 
 	if match.Lyric == "" {
 		return false, SEARCH
 	}
+
+	fmt.Printf("result from chartlyrics: %s\n", match.Lyric)
+
 	return dirty(strings.ToLower(match.Lyric), song, artist, site), nil
 }
